@@ -1,6 +1,6 @@
 #### Preamble ####
 # Purpose: Simulates the data of CCES22
-# Author: Lin Dai
+# Author: Lin Dai Pengyu Sui
 # Date: 9 Mar 2024
 # Contact: dailin200007302gmail.com
 
