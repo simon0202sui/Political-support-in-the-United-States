@@ -36,7 +36,7 @@ US2022 = read_parquet(
 
 # Read in model
 #political_preferences <-
-  #readRDS(file = here::here(""))
+  #readRDS(file = here::here("")).
 
 ```
 
