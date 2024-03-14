@@ -1,7 +1,6 @@
 # The Story Behind the U.S. Election Data.
 ## Overview
 
-## Statement on LLM Usage
 
 
 ## File Structure
@@ -17,3 +16,9 @@
 * /scripts : R scripts used for data analysis
 
 ## Contact information
+
+
+
+##Statement on LLM usage
+No LLMs were used.
+
