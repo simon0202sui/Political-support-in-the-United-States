@@ -1,6 +1,6 @@
 #### Preamble ####
 # Purpose : clean the data of CCES22_Common_OUTPUT_vv_topost.dta
-# Author : Lin Dai
+# Author : Lin Dai Pengyu Sui
 # Email : dailin20000730@gmail.com
 # Date : 9 Mar 2024
 
