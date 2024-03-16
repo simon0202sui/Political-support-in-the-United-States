@@ -1,0 +1,210 @@
+---
+title: "Behind Biden's 2020 Win: Analyzing Key Influencers through Regression Models and Visualizations"
+author: 
+  - Pengyu Sui
+  - Lin Dai
+  - Xuecheng Gao
+thanks: "Code and data are available at: https://github.com/simon0202sui/Political-support-in-the-US-2020.git"
+date: today
+date-format: long
+abstract: "."
+format: pdf
+number-sections: true
+bibliography: references.bib
+toc: true
+---
+
+```{r}
+#| include: false
+#| warning: false
+#| message: false
+#### Workspace setup ####
+library(ggplot2)
+library(arrow)
+library(scales)
+library(modelsummary)
+library(tidyverse)
+library(rstanarm)
+library(knitr)
+library(here)
+library(marginaleffects)
+# Read cleaned data
+cleaned_data <- read_csv(file = "C:/Users/User/Desktop/Paper3/data_cleaned.csv")
+
+# Read model
+political_preferences <- readRDS(file = here::here("C:/Users/User/Desktop/Paper3/models/biden_support_model.rds"))
+```
+
+# Introduction
+
+
+
+
+# Data {#sec-data}
+```{r}
+#| echo: false
+#| message: false
+#| label: fig-Age-gender
+#| fig-cap: "Percentage of Biden Support by Age Group and Gender"
+
+# Load the dataset
+cleaned_data_survey <- read_csv("C:/Users/User/Desktop/Paper3/data_cleaned.csv")
+
+# Filter the data for those who support Biden
+biden_support <- cleaned_data_survey %>%
+  filter(support_biden == "Yes")
+
+# Calculate the counts of Biden supporters within each age group and gender
+support_counts <- biden_support %>%
+  group_by(age_group, gender) %>%
+  summarise(count = n(), .groups = 'drop')
+
+# Calculate the total number of Biden supporters by gender
+total_supporters_by_gender <- support_counts %>%
+  group_by(gender) %>%
+  summarise(total_gender_supporters = sum(count), .groups = 'drop')
+
+# Join the total supporters by gender back to the support counts to calculate percentages
+percentage_both <- support_counts %>%
+  left_join(total_supporters_by_gender, by = "gender") %>%
+  mutate(percentage = (count / total_gender_supporters))
+
+# Plot the horizontal bar chart for males and females
+plot_gender <- ggplot(percentage_both, aes(x = age_group, y = percentage * 100, fill = gender)) +  # Multiply by 100 for percentage
+  geom_bar(stat = "identity", position = "dodge") +
+  geom_text(aes(label = paste0(round(percentage * 100), "%")),  # Multiply by 100 for percentage
+            position = position_dodge(width = 0.9), vjust = -0.3, size = 3) +
+  facet_wrap(~ gender) +  # Separate plots for each gender
+  labs(x = "Age Group", y = "Percentage Support for Biden within Gender", fill = "Gender") +
+  theme_minimal() +
+  coord_flip() +
+  scale_fill_brewer(palette = "Set1") +
+  theme(legend.position = "bottom")
+
+# Output the plot
+plot_gender
+
+```
+
+```{r}
+#| echo: false
+#| message: false
+#| label: fig-Race-gender
+#| fig-cap: "Percentage of Biden Support by Race and Gender"
+
+# Filter the data for those who support Biden
+biden_support <- cleaned_data_survey %>%
+  filter(support_biden == "Yes")
+
+# Calculate the counts of Biden supporters within each race and gender
+support_counts <- biden_support %>%
+  group_by(race, gender) %>%
+  summarise(count = n(), .groups = 'drop')
+
+# Calculate the total number of Biden supporters by gender
+total_supporters_by_gender <- support_counts %>%
+  group_by(gender) %>%
+  summarise(total_gender_supporters = sum(count), .groups = 'drop')
+
+# Join the total supporters by gender back to the support counts to calculate percentages
+percentage_race_gender <- support_counts %>%
+  left_join(total_supporters_by_gender, by = "gender") %>%
+  mutate(percentage = (count / total_gender_supporters))
+
+# Plot the horizontal bar chart for race and gender
+plot_race_gender <- ggplot(percentage_race_gender, aes(x = race, y = percentage * 100, fill = gender)) +  # Multiply by 100 for percentage
+  geom_bar(stat = "identity", position = "dodge") +
+  geom_text(aes(label = paste0(round(percentage * 100), "%")),  # Multiply by 100 for percentage
+            position = position_dodge(width = 0.9), vjust = -0.3, size = 3) +
+  facet_wrap(~ gender) +  # Separate plots for each gender
+  labs(x = "Race", y = "Percentage Support for Biden within Gender", fill = "Gender") +
+  theme_minimal() +
+  coord_flip() +
+  scale_fill_brewer(palette = "Set1") +
+  theme(legend.position = "bottom")
+
+# Output the plot
+plot_race_gender
+
+```
+
+## Data Source
+
+
+
+## Methodology
+
+## Variables
+
+## Measurement
+
+
+# Model {#sec-model}
+
+## Model set-up
+
+
+## Model justification
+
+
+
+# Results {#sec-results}
+
+
+## Gender
+
+
+
+## Race
+
+
+## Age Group
+
+
+
+
+`
+
+# Discussion {#sec-discussion}
+
+## Findings
+
+
+
+## Women are more likely to vote for Biden
+
+
+
+## Black, Asian, Hispanic, and Middle Eastern individuals are more likely to vote for Biden
+
+
+
+## Non-gun owners are more likely to vote for Biden
+
+
+## Future 
+
+
+\newpage
+
+
+\appendix
+
+# Appendix {-}
+
+# Additional data details
+
+# Model details {#sec-model-details}
+
+## Posterior predictive check
+
+
+## Diagnostics
+
+
+
+
+\newpage
+
+
+# References
